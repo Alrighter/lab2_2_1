@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Channels;
 
 namespace lab2_2_1
@@ -8,7 +9,7 @@ namespace lab2_2_1
         public delegate float SampleDelegate(float a, float b, float c);
         public delegate float Calc(float a, float b);
 
-        public delegate int delegate1();
+        public delegate int Avarage(int a, int b, int c, int d);
         
         
 
@@ -18,9 +19,10 @@ namespace lab2_2_1
             float b = 4;
             float c = 5;
 
-            // Анонимный метод
+            //Анонимный метод
             SampleDelegate sd;
             sd = delegate(float a, float b, float c) { return (a+b+c)/3 ; } ;
+            Console.WriteLine("Среднее арифметическое 3, 4, 5: " + sd(a,b,c) + "\n\n");
 
             //Калькулятор
             Console.Write("   Калькулятор\n\nВведите первое число: ");
@@ -29,18 +31,25 @@ namespace lab2_2_1
             b = (float)Convert.ToDouble(Console.ReadLine());
 
             Calc calc1 = Add;
-            Console.WriteLine($"Добавление: {calc1(a, b)}");
+            int add =  Convert.ToInt32(calc1(a, b));
+            Console.WriteLine($"Добавление: {add}");
             calc1 = Sub;
-            Console.WriteLine($"Отнимание: {calc1(a, b)}");
+            int sub = Convert.ToInt32(calc1(a, b));
+            Console.WriteLine($"Отнимание: {sub}");
             calc1 = Div;
+            int div = Convert.ToInt32(calc1(a, b));
             Console.WriteLine($"Деление: {calc1(a, b)}");
             calc1 = Mult;
-            Console.WriteLine($"Умножение: {calc1(a, b)}");
+            int mult = Convert.ToInt32(calc1(a, b));
+            Console.WriteLine($"Умножение: {mult}\n\n");
 
+            //Анонимный метод который возвращает среднее арифметическое массива делегатов.
+            Avarage avarage1 = delegate(int a, int b, int c, int d) { return (int)(a+b+c+d)/4; };
+            Console.WriteLine("Среднее арифметическое: " + avarage1(add,sub, div,mult));
 
         }
 
-        private static float Add(float a, float b)
+        public static float Add(float a, float b)
         {
             return a + b;
     }
