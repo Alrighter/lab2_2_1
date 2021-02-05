@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Threading.Channels;
 
 namespace lab2_2_1
 {
@@ -8,8 +6,7 @@ namespace lab2_2_1
     {
         public delegate float SampleDelegate(float a, float b, float c);
         public delegate float Calc(float a, float b);
-
-        public delegate int Avarage(int a, int b, int c, int d);
+        public delegate int Average(int a);
         
         
 
@@ -44,8 +41,17 @@ namespace lab2_2_1
             Console.WriteLine($"Умножение: {mult}\n\n");
 
             //Анонимный метод который возвращает среднее арифметическое массива делегатов.
-            Avarage avarage1 = delegate(int a, int b, int c, int d) { return (int)(a+b+c+d)/4; };
-            Console.WriteLine("Среднее арифметическое: " + avarage1(add,sub, div,mult));
+            Random rnd = new Random();
+            Average[] averageArr = new Average[rnd.Next(1, 10)];
+            int asd = 0;
+            for (int i = 0; i < averageArr.Length; i++)
+            {
+                averageArr[i] = delegate (int a) { return a; };
+                asd += averageArr[i].Invoke(rnd.Next(1, 10));
+            }
+
+            Console.WriteLine("Среднее арифметическое (масив делегатов с рандомными числами): " + asd / averageArr.Length);
+            Console.ReadKey();
 
         }
 
@@ -76,6 +82,8 @@ namespace lab2_2_1
         {
             return a * b;
         }
+
         
+
     }
 }
